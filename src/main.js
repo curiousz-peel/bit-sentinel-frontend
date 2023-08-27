@@ -1,16 +1,24 @@
 import "./assets/main.css";
-
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import Antd from "ant-design-vue";
 
 import App from "./App.vue";
 import router from "./router";
 
-const app = createApp(App);
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-app.use(createPinia());
-app.use(Antd);
-app.use(router);
+/* import font awesome icon component */
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-app.mount("#app");
+/* import specific icons */
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCaretRight } from "@fortawesome/free-solid-svg-icons";
+
+/* add icons to the library */
+library.add(faUser, faSquareCaretRight);
+
+createApp(App)
+  .component("font-awesome-icon", FontAwesomeIcon)
+  .use(router)
+  .use(createPinia())
+  .mount("#app");
