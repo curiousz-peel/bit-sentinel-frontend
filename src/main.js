@@ -13,9 +13,30 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 /* import specific icons */
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faSquareCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpenReader } from "@fortawesome/free-solid-svg-icons";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faPenNib } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faUser, faSquareCaretRight);
+library.add(
+  faUser,
+  faSquareCaretRight,
+  faBook,
+  faHouse,
+  faBookOpenReader,
+  faWallet,
+  faPenNib,
+  faCartShopping,
+  faDoorOpen,
+  faScrewdriverWrench,
+  faTriangleExclamation
+);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)

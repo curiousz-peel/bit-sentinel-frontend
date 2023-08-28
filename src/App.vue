@@ -1,15 +1,9 @@
 <script setup>
-  import Nav from "./components/Nav.vue";
-  import { sidebarStatusStore } from "./stores/sidebarStatus";
-  const { collapsed, notCollapsed, getWidth, toggleSidebar } =
-    sidebarStatusStore();
+  import { RouterView } from "vue-router";
 </script>
 
 <template>
   <main>
-    <Nav />
-    <div :style="{ 'margin-left': getWidth() }"></div>
+    <RouterView />
   </main>
 </template>
-
-<style scoped></style>
