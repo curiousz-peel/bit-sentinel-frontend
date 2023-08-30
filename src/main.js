@@ -22,6 +22,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import naive from "naive-ui";
 
 /* add icons to the library */
 library.add(
@@ -42,4 +43,5 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
   .use(createPinia())
+  .use(naive)
   .mount("#app");

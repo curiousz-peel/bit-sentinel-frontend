@@ -6,7 +6,7 @@
 
   const router = useRouter();
   const logOutUser = () => {
-    router.push("/login");
+    router.push("/auth");
   };
 </script>
 
@@ -99,6 +99,9 @@
     left: 0;
     padding: 0.5em;
     transition: 0.3s ease;
+    border: 5px solid;
+    border-color: #1a0b28;
+    border-bottom: 5px solid #1a0b28;
   }
   .bit {
     margin-left: 12px;
@@ -127,7 +130,7 @@
   }
 
   .options {
-    margin-top: 4.3em;
+    margin-top: 4.9em;
     transition: 0.3s linear;
   }
   .options-wide {
@@ -146,6 +149,8 @@
     display: flex;
     flex-direction: column;
     transition: 0.3s ease;
+    border: 5px solid;
+    border-color: #1a0b28;
   }
 
   .sidebar-nav-button {
