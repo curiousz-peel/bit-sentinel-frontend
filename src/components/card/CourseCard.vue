@@ -3,6 +3,7 @@
   import { defineProps, onBeforeMount, ref } from "vue";
   import { useRouter } from "vue-router";
 
+  const router = useRouter();
   const props = defineProps({
     course: {
       type: Object,
@@ -10,16 +11,16 @@
     },
   });
 
-  const router = useRouter();
   const goToCourse = (id) => {
     router.push(`/course/${id}`);
   };
 
   const courseRatings = ref(null);
   onBeforeMount(async () => {
+    console.log(props.course);
     await axios({
       method: "get",
-      url: `http://localhost:8080/api/rating/course/${props.course.ID}`,
+      url: `http://localhost:8080/api/rating/course/${props.course.id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
@@ -35,7 +36,7 @@
 </script>
 
 <template>
-  <div class="course-card" @click="goToCourse(props.course.ID)">
+  <div class="course-card" @click="goToCourse(props.course.id)">
     <img
       src="https://images.unsplash.com/photo-1693032521214-fb25014ac9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3432&q=80"
       :alt="course.title"
@@ -54,7 +55,6 @@
             courseRatings && courseRatings.length !== 1 ? "ratings" : "rating"
           }}
         </div>
-        <!-- <div class="rating-count">{{ courseRatings.length }} ratings</div> -->
       </div>
       <div class="subscription-container">
         <h3 class="subscription-tier">
@@ -75,32 +75,26 @@
     background-color: #6a3993;
     cursor: pointer;
   }
-
   .course-card:hover {
     box-shadow: 0 0 10px 7px rgba(180, 48, 175, 0.5);
   }
-
   .course-image {
     width: 150px;
     height: 200x;
     object-fit: cover;
   }
-
   .course-info {
     padding: 5px;
   }
-
   .course-title {
     font-size: 1.2rem;
     margin-top: 0;
     margin-bottom: 1px;
     color: rgb(252, 236, 219);
   }
-
   .course-tags {
     margin-bottom: 8px;
   }
-
   .tag {
     display: inline-block;
     color: rgb(252, 236, 219);
@@ -112,20 +106,17 @@
     font-size: 0.8rem;
     font-weight: bold;
   }
-
   .course-rating {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
   }
-
   .rating-score {
     font-size: 1.2rem;
     font-weight: bold;
     margin-right: 4px;
     color: rgb(252, 236, 219);
   }
-
   .rating-count {
     font-size: 0.8rem;
     font-weight: bold;
@@ -135,7 +126,6 @@
     color: #b430af;
     margin-left: 4px;
   }
-
   .subscription-container {
     display: flex;
     align-items: center;

@@ -1,12 +1,31 @@
 <script setup>
+  import axios from "axios";
+  import { ref, onBeforeMount } from "vue";
+  import { useRouter } from "vue-router";
   import Hero from "../components/hero/Hero.vue";
   import CourseCard from "../components/card/CourseCard.vue";
-  import { courses } from "./sampleData";
-  import { ref, computed } from "vue";
 
+  const router = useRouter();
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
-  const isLoggedIn = computed(() => {
-    return localStorage.getItem("bitSentinelToken");
+
+  const courses = ref(null);
+
+  onBeforeMount(async () => {
+    await axios({
+      method: "get",
+      url: `http://localhost:8080/api/course/`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+      },
+    })
+      .then(function (response) {
+        courses.value = response.data.data;
+        console.log(courses.value);
+      })
+      .catch(function (error) {
+        alert(error.response.data);
+      });
   });
 </script>
 
@@ -25,14 +44,11 @@
             />
           </div>
         </div>
-        <!-- <KeepAlive>
-        <CourseCards></CourseCards>
-      </KeepAlive> -->
       </div>
     </div>
   </main>
   <main v-else>
-    <h1>not authorized</h1>
+    {{ router.push("/auth") }}
   </main>
 </template>
 
@@ -51,7 +67,6 @@
     padding-top: 10px;
     padding-left: 25px;
   }
-
   .courses-section-first {
     padding-bottom: 10px;
     padding-left: 20px;
@@ -60,38 +75,6 @@
     text-shadow: -2px 2px 2px #834db0, 2px 2px 2px #834db0, 2px -2px 2px #834db0,
       -2px -2px 2px #834db0;
   }
-  .courses-section {
-    padding-top: 25px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    font-size: 45px;
-    color: rgb(252, 236, 219);
-    text-shadow: -2px 2px 2px #834db0, 2px 2px 2px #834db0, 2px -2px 2px #834db0,
-      -2px -2px 2px #834db0;
-  }
-
-  .courses-prodigies {
-    padding-bottom: 10px;
-    padding-top: 25px;
-    padding-left: 20px;
-    color: rgb(252, 236, 219);
-    text-shadow: rgb(180, 48, 175) 1px 0 10px, rgb(180, 48, 175) 1px 0 15px,
-      rgb(180, 48, 175) 1px 0 25px, rgb(180, 48, 175) 1px 0 40px,
-      rgb(180, 48, 175) 1px 0 52px;
-    font-size: 30px;
-  }
-
-  .courses-foundations {
-    padding-bottom: 10px;
-    padding-top: 25px;
-    padding-left: 20px;
-    font-size: 30px;
-    color: rgb(180, 48, 175);
-    text-shadow: rgb(106, 57, 147) 1px 0 10px, rgb(106, 57, 147) 1px 0 15px,
-      rgb(106, 57, 147) 1px 0 25px, rgb(106, 57, 147) 1px 0 40px,
-      rgb(106, 57, 147) 1px 0 52px;
-  }
-
   .courses-container {
     display: grid;
     grid-template-columns: 375px 375px 375px;

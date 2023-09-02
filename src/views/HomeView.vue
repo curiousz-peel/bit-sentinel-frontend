@@ -1,10 +1,9 @@
 <script setup>
-  import Hero from "../components/hero/Hero.vue";
-  import CourseCard from "../components/card/CourseCard.vue";
-  import { courses } from "./sampleData";
-  import { ref, computed, onMounted } from "vue";
-  import { useRouter } from "vue-router";
   import axios from "axios";
+  import { ref, onMounted } from "vue";
+  import { useRouter } from "vue-router";
+  import CourseCard from "../components/card/CourseCard.vue";
+  import Hero from "../components/hero/Hero.vue";
 
   const router = useRouter();
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
@@ -26,14 +25,6 @@
       ])
       .then(
         axios.spread((recent, bestRated, fundamental) => {
-          console.log(
-            "recent",
-            recent,
-            "bestRated",
-            bestRated,
-            "fundamental",
-            fundamental
-          );
           recentCourses.value = recent.data.data;
           bestRatedCourses.value = bestRated.data.data;
           fundamentalCourses.value = fundamental.data.data;
