@@ -12,45 +12,37 @@
     const route = useRoute();
     const courseId = parseInt(route.params.id);
   });
-
-  const goToTag = () => {
-    console.log("GO TO COURSES TAGS");
-  };
-
-  const goToLesson = () => {
-    console.log("GO TO LESSON");
-  };
-
-  const goToQuiz = () => {
-    console.log("GO TO QUIZ");
-  };
-
-  //need to refresh rating after rating a course
-  //can only rate if user owns the course
-  const rateCourse = (rating) => {
-    console.log("RATE COURSE", rating);
-  };
 </script>
 
 <template>
   <main v-if="loggedIn">
-    <div>
-      <Hero :backgroundImagePath="'../src/components/jpg/course1.jpg'" />
-    </div>
+    <!-- <div>
+      <Hero :backgroundImagePath="'../src/components/jpg/lesson1.jpg'" />
+    </div> -->
     <div class="course-container">
-      <h1 class="course-title">Course Title Here</h1>
-      <h2 class="course-authors">John Doe, Mary Who</h2>
+      <h1 class="lesson-title">Lesson Title Here</h1>
+      <video
+        width="1000"
+        height="1000"
+        controls="controls"
+        class="course-video"
+        playsinline
+        autoplay
+        muted
+        loop
+      >
+        <source src="../assets/courseVideos/01_video.mp4" type="video/mp4" />
+      </video>
+      <div class="document">
+        <embed
+          src="../src/assets/coursePDFs/01_pdf.pdf"
+          width="1000"
+          height="600"
+        />
+      </div>
       <div class="content-and-tags">
-        <div class="course-tags">
-          <h2 class="tags-rating-header">.tags:</h2>
-          <ul>
-            <li @click="goToTag" class="tag">Web Development</li>
-            <li class="tag">JavaScript</li>
-            <li class="tag">Front-end</li>
-          </ul>
-        </div>
-        <div class="course-content">
-          <h1 class="course-description">
+        <div class="lesson-content">
+          <h1 class="lesson-description">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
             doloremque illum cumque. Autem quod totam, iure consectetur eaque
             error magni facere nihil aliquid beatae, excepturi dolorum, sit odio
@@ -66,28 +58,16 @@
           </h1>
         </div>
       </div>
-      <div class="rating-subscription">
-        <h2 class="tags-rating-header">.rating:</h2>
-        <div class="course-rating">
-          <h2 class="rating">3.5</h2>
-          <h2 class="out-of-rating">/5</h2>
-        </div>
-        <div class="rating-buttons">
-          <button @click="rateCourse(1)" class="rating-button">1</button>
-          <button @click="rateCourse(2)" class="rating-button">2</button>
-          <button @click="rateCourse(3)" class="rating-button">3</button>
-          <button @click="rateCourse(4)" class="rating-button">4</button>
-          <button @click="rateCourse(5)" class="rating-button">5</button>
-        </div>
-        <div class="subscription">
-          <h2 class="tags-rating-header">.tier:</h2>
-          <h2 class="subscription-tier">Premium</h2>
-        </div>
+      <div class="button-container">
+        <!-- @click="page--" -->
+        <button>&lt</button>
+        <!-- @click="page++" -->
+        <button>></button>
       </div>
       <div class="lessons-quizzes">
         <h1 class="lesson-header">Lessons</h1>
         <ul class="lesson-list">
-          <li @click="goToLesson" class="lesson">Lorem ipsum dolor sit.</li>
+          <li class="lesson">Lorem ipsum dolor sit.</li>
           <li class="lesson">Lorem ipsum dolor sit amet consectetur.</li>
           <li class="lesson">
             Lorem ipsum dolor sit amet consectetur adipisicing.
@@ -102,7 +82,7 @@
         </ul>
         <h1 class="quiz-header">Quizzes</h1>
         <ul class="quiz-list">
-          <li @click="goToQuiz" class="quizz">Lorem ipsum dolor sit.</li>
+          <li class="quizz">Lorem ipsum dolor sit.</li>
           <li class="quizz">Lorem ipsum dolor sit amet consectetur.</li>
           <li class="quizz">
             Lorem ipsum dolor sit amet consectetur adipisicing.
@@ -121,9 +101,17 @@
 </template>
 
 <style scoped>
+  .document {
+    margin-bottom: 40px;
+  }
   .quiz-header {
     color: #fcecdb;
     margin-bottom: 10px;
+  }
+  .course-video {
+    margin-bottom: 40px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px #1a0b28;
   }
   .lesson-header {
     color: #fcecdb;
@@ -184,45 +172,10 @@
     text-align: center;
     z-index: 2;
     margin-bottom: 40px;
-    margin-top: -300px;
-    margin-left: 90px;
-  }
-  .rating-buttons {
-    display: flex;
-    gap: 6px;
-    margin-left: 40px;
-    margin-bottom: 20px;
-  }
-  .rating-button {
-    font-size: 30px;
-    padding: 2px 8px;
-    border-radius: 3px;
-    background-color: #1a0b28;
-    color: #fff;
-    border: none;
-    font-weight: bold;
-  }
-
-  .rating-button:hover {
-    background-color: #762eb9;
-  }
-
-  .rating-subscription {
-    display: inline-block;
-    padding: 0 70em 0 3em;
-  }
-
-  .tags-rating-header {
-    color: white;
-    margin-bottom: 8px;
-    text-align: center;
-    text-shadow: 3px 3px #b430af;
-    font-size: 35px;
   }
   .content-and-tags {
     display: flex;
     gap: 50px;
-    margin-left: -150px;
   }
   .course-container {
     display: flex;
@@ -232,9 +185,9 @@
     width: 100vw;
     height: 100vh;
     overflow-y: auto;
-    background-color: #594866;
+    background-color: #48404f;
   }
-  .course-content {
+  .lesson-content {
     max-width: 800px;
     margin: 20px auto;
     background-color: #fff;
@@ -243,90 +196,47 @@
     padding: 20px;
   }
 
-  .course-title {
+  .lesson-title {
     font-size: 46px;
     font-weight: bold;
     margin: 0;
     margin-top: 20px;
     text-align: center;
     justify-self: center;
+    background-color: #fcecdb;
+    color: #1a0b28;
+    padding: 0px 15px 0px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 45px;
+  }
+
+  .lesson-description {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-top: 30px;
+    margin-bottom: 50px;
+  }
+  .button-container button {
+    border: none;
+    font-weight: bolder;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #fcecdb;
+  }
+
+  .button-container button:hover {
     background-color: #1a0b28;
     color: #fcecdb;
-    padding: 0px 15px 0px 15px;
-    border-radius: 25px;
-    display: inline-block;
-  }
-  .course-authors {
-    background-color: #b430af;
-    color: #fcecdb;
-    padding: 0px 3px 0px 3px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    z-index: 2;
-    margin-top: -7px;
-    margin-left: 78px;
-  }
-
-  .course-description {
-    font-size: 20px;
-  }
-
-  .course-tags {
-    display: inline-block;
-    font-size: 14px;
-    margin: 10px 0;
-  }
-
-  .tag {
-    list-style-type: none;
-    font-size: 20px;
-    color: #b430af;
-    font-weight: bolder;
-    background-color: #fcecdb;
-    padding: 2px 5px 2px 5px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .tag:hover {
-    background-color: #b430af;
-    color: #fcecdb;
-  }
-
-  li.tag:not(:last-child) {
-    margin-bottom: 15px;
-  }
-
-  .course-rating {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    font-size: 25px;
-    color: #1a0b28;
-    font-weight: bolder;
-    margin-top: -28px;
-    margin-left: 70px;
-  }
-  .rating {
-    font-size: 55px;
-    color: #fff;
-    text-shadow: 2px 3px 5px #1a0b28;
-  }
-
-  .subscription-tier {
-    font-size: 25px;
-    background-color: #b430af;
-    color: #fff;
-    padding: 0 10px;
-    margin-bottom: 20px;
-    margin-right: 80px;
-    border-radius: 3px;
-    margin-left: 70px;
-  }
-
-  .subscription {
-    display: flex;
-    flex-direction: column;
   }
 </style>
