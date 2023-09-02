@@ -39,57 +39,6 @@
           fundamentalCourses.value = fundamental.data.data;
         })
       );
-
-    // .catch(
-    //   axios.spread((err1, err2, err3) => {
-    //     console.log(err1, err2, err3);
-    //   })
-    // );
-
-    // await axios({
-    //   method: "get",
-    //   url: `http://localhost:8080/api/course/recent`,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
-    //   },
-    // })
-    //   .then(function (response) {
-    //     recentCourses.value = response.data.data;
-    //   })
-    //   .catch(function (error) {
-    //     alert(error.response.data);
-    //   });
-
-    //   await axios({
-    //   method: "get",
-    //   url: `http://localhost:8080/api/course/rating`,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
-    //   },
-    // })
-    //   .then(function (response) {
-    //     recentCourses.value = response.data.data;
-    //   })
-    //   .catch(function (error) {
-    //     alert(error.response.data);
-    //   });
-
-    //   await axios({
-    //   method: "get",
-    //   url: `http://localhost:8080/api/course/fundamental`,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
-    //   },
-    // })
-    //   .then(function (response) {
-    //     recentCourses.value = response.data.data;
-    //   })
-    //   .catch(function (error) {
-    //     alert(error.response.data);
-    //   });
   });
 </script>
 
@@ -124,9 +73,6 @@
             />
           </div>
         </div>
-        <!-- <KeepAlive>
-        <CourseCards></CourseCards>
-      </KeepAlive> -->
       </div>
     </div>
   </main>
