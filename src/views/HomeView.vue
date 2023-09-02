@@ -2,11 +2,94 @@
   import Hero from "../components/hero/Hero.vue";
   import CourseCard from "../components/card/CourseCard.vue";
   import { courses } from "./sampleData";
-  import { ref, computed } from "vue";
+  import { ref, computed, onMounted } from "vue";
+  import { useRouter } from "vue-router";
+  import axios from "axios";
 
+  const router = useRouter();
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
-  const isLoggedIn = computed(() => {
-    return localStorage.getItem("bitSentinelToken");
+
+  const recentCourses = ref(null);
+  const bestRatedCourses = ref(null);
+  const fundamentalCourses = ref(null);
+
+  onMounted(async () => {
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("bitSentinelToken")}`;
+
+    await axios
+      .all([
+        axios.get(`http://localhost:8080/api/course/recent`),
+        axios.get(`http://localhost:8080/api/course/rating`),
+        axios.get(`http://localhost:8080/api/course/fundamental`),
+      ])
+      .then(
+        axios.spread((recent, bestRated, fundamental) => {
+          console.log(
+            "recent",
+            recent,
+            "bestRated",
+            bestRated,
+            "fundamental",
+            fundamental
+          );
+          recentCourses.value = recent.data.data;
+          bestRatedCourses.value = bestRated.data.data;
+          fundamentalCourses.value = fundamental.data.data;
+        })
+      );
+
+    // .catch(
+    //   axios.spread((err1, err2, err3) => {
+    //     console.log(err1, err2, err3);
+    //   })
+    // );
+
+    // await axios({
+    //   method: "get",
+    //   url: `http://localhost:8080/api/course/recent`,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+    //   },
+    // })
+    //   .then(function (response) {
+    //     recentCourses.value = response.data.data;
+    //   })
+    //   .catch(function (error) {
+    //     alert(error.response.data);
+    //   });
+
+    //   await axios({
+    //   method: "get",
+    //   url: `http://localhost:8080/api/course/rating`,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+    //   },
+    // })
+    //   .then(function (response) {
+    //     recentCourses.value = response.data.data;
+    //   })
+    //   .catch(function (error) {
+    //     alert(error.response.data);
+    //   });
+
+    //   await axios({
+    //   method: "get",
+    //   url: `http://localhost:8080/api/course/fundamental`,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+    //   },
+    // })
+    //   .then(function (response) {
+    //     recentCourses.value = response.data.data;
+    //   })
+    //   .catch(function (error) {
+    //     alert(error.response.data);
+    //   });
   });
 </script>
 
@@ -19,7 +102,7 @@
           <h1 class="courses-section-first">.newcomers</h1>
           <div class="courses-container">
             <CourseCard
-              v-for="course in courses"
+              v-for="course in recentCourses"
               :key="course.title"
               :course="course"
             />
@@ -27,7 +110,7 @@
           <h1 class="courses-section">.prodigies</h1>
           <div class="courses-container">
             <CourseCard
-              v-for="course in courses"
+              v-for="course in bestRatedCourses"
               :key="course.title"
               :course="course"
             />
@@ -35,7 +118,7 @@
           <h1 class="courses-section">.pillars</h1>
           <div class="courses-container">
             <CourseCard
-              v-for="course in courses"
+              v-for="course in fundamentalCourses"
               :key="course.title"
               :course="course"
             />
@@ -48,7 +131,7 @@
     </div>
   </main>
   <main v-else>
-    <h1>not authorized</h1>
+    {{ router.push("/auth") }}
   </main>
 </template>
 

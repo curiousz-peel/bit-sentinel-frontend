@@ -1,5 +1,6 @@
 <script setup>
-  import { defineProps } from "vue";
+  import axios from "axios";
+  import { defineProps, onBeforeMount, ref } from "vue";
   import { useRouter } from "vue-router";
 
   const props = defineProps({
@@ -13,22 +14,52 @@
   const goToCourse = (id) => {
     router.push(`/course/${id}`);
   };
+
+  const courseRatings = ref(null);
+  onBeforeMount(async () => {
+    await axios({
+      method: "get",
+      url: `http://localhost:8080/api/rating/course/${props.course.ID}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+      },
+    })
+      .then(function (response) {
+        courseRatings.value = response.data.data;
+      })
+      .catch(function (error) {
+        alert(error.response.data);
+      });
+  });
 </script>
 
 <template>
-  <div class="course-card" @click="goToCourse(course.id)">
-    <img :src="course.image" :alt="course.title" class="course-image" />
+  <div class="course-card" @click="goToCourse(props.course.ID)">
+    <img
+      src="https://images.unsplash.com/photo-1693032521214-fb25014ac9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3432&q=80"
+      :alt="course.title"
+      class="course-image"
+    />
     <div class="course-info">
       <h2 class="course-title">{{ course.title }}</h2>
       <div class="course-tags">
         <span v-for="tag in course.tags" :key="tag" class="tag">{{ tag }}</span>
       </div>
       <div class="course-rating">
-        <div class="rating-score">{{ course.rating.score }} / 5</div>
-        <div class="rating-count">{{ course.rating.count }} ratings</div>
+        <div class="rating-score">{{ parseInt(props.course.rating) }} / 5</div>
+        <div class="rating-count">
+          {{ courseRatings ? courseRatings.length : 0 }}
+          {{
+            courseRatings && courseRatings.length !== 1 ? "ratings" : "rating"
+          }}
+        </div>
+        <!-- <div class="rating-count">{{ courseRatings.length }} ratings</div> -->
       </div>
       <div class="subscription-container">
-        <h3 class="subscription-tier">{{ course.subscriptionTier }}</h3>
+        <h3 class="subscription-tier">
+          {{ course.subscriptions.at(0) }}
+        </h3>
       </div>
     </div>
   </div>
@@ -118,63 +149,3 @@
     color: #b430af;
   }
 </style>
-
-<!-- <script setup>
-  import { defineProps } from "vue";
-
-  const { title, rating, subscription, tags } = defineProps([
-    "title",
-    "rating",
-    "subscription",
-    "tags",
-    "img",
-  ]);
-</script>
-
-<template>
-  <main> -->
-<!-- <div class="user-card">
-      <div class="card-image">
-        <img
-          src="https://images.unsplash.com/photo-1693032521214-fb25014ac9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3432&q=80"
-        />
-      </div>
-      <div class="card-content">
-        <h2 class="title">Course</h2>
-        <p class="tags">Lorem ipsum dolor sit amet.</p>
-        <h2 class="rating">4.23/5</h2>
-        <h4 class="users-rated">78</h4>
-        <h3 class="subscription">Free</h3>
-        <button>View</button>
-      </div>
-    </div> -->
-<!-- <n-card title="">
-      <template #cover>
-        <img
-          src="https://images.unsplash.com/photo-1693032521214-fb25014ac9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3432&q=80"
-        />
-      </template>
-      <h3>Title</h3>
-      <button class="view-button">View</button>
-    </n-card>
-  </main>
-</template> -->
-
-<!-- rgba(180, 48, 175, 0.5); -->
-
-<!-- <style scoped>
-  .n-card {
-    height: 300px;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .n-card:hover {
-    box-shadow: 0 0 10px 7px rgba(180, 48, 175, 0.5);
-  }
-
-  img {
-    height: 150px;
-  }
-</style> -->

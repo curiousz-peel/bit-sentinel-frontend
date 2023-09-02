@@ -35,7 +35,6 @@
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
         setLoggedInTrue();
-        console.log(isLoggedIn());
         router.push("/");
       })
       .catch(function (error) {
