@@ -34,6 +34,7 @@
     })
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
+        localStorage.setItem("userName", userName.value);
         setLoggedInTrue();
         router.push("/");
       })
@@ -144,7 +145,6 @@
     border-radius: 4px;
     box-sizing: border-box;
   }
-
   input[type="password"] {
     width: 100%;
     padding: 12px 12px;
@@ -154,15 +154,12 @@
     border-radius: 4px;
     box-sizing: border-box;
   }
-
   input[type="text"]:focus {
     border: 4px solid #6a3993;
   }
-
   input[type="password"]:focus {
     border: 4px solid #6a3993;
   }
-
   input[type="submit"] {
     width: 100%;
     background-color: #6a3993;
@@ -176,11 +173,9 @@
     border-radius: 4px;
     cursor: pointer;
   }
-
   input[type="submit"]:hover {
     background-color: #7c4ba4;
   }
-
   .auth-form {
     z-index: 1;
     position: relative;
@@ -203,7 +198,6 @@
     z-index: 2;
     position: relative;
   }
-
   .auth-secondary-login {
     padding: 0 10px 0 10px;
     margin-top: -10px;
@@ -226,7 +220,6 @@
     z-index: 2;
     position: relative; /* Add this line */
   }
-
   .auth-secondary-signup {
     padding: 0 10px 0 10px;
     margin-top: -13px;
@@ -262,11 +255,9 @@
     background-color: rgba(255, 255, 255, 0.65);
     z-index: 1;
   }
-
   .fade-enter-active {
     transition: opacity 1s ease-in;
   }
-
   .fade-enter-from {
     opacity: 0;
   }

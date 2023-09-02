@@ -17,7 +17,6 @@
 
   const courseRatings = ref(null);
   onBeforeMount(async () => {
-    console.log(props.course);
     await axios({
       method: "get",
       url: `http://localhost:8080/api/rating/course/${props.course.id}`,
