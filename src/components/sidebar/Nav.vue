@@ -146,7 +146,7 @@
     background-color: #6a3993;
     float: left;
     position: fixed;
-    z-index: 1;
+    z-index: 6;
     top: 0;
     left: 0;
     bottom: 0;

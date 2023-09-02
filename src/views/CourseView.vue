@@ -3,10 +3,14 @@
   import CourseCard from "../components/card/CourseCard.vue";
   import { courses } from "./sampleData";
   import { ref, computed, defineProps } from "vue";
+  import { useRoute } from "vue-router";
 
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
   const isLoggedIn = computed(() => {
     return localStorage.getItem("bitSentinelToken");
+
+    const route = useRoute();
+    const courseId = parseInt(route.params.id);
   });
 </script>
 
@@ -44,7 +48,7 @@
           </h1>
         </div>
       </div>
-      <div class="rating-subscription-and-lessons">
+      <div class="rating-subscription">
         <h2 class="tags-rating-header">.rating:</h2>
         <div class="course-rating">
           <h2 class="rating">3.5</h2>
@@ -62,6 +66,35 @@
           <h2 class="subscription-tier">Premium</h2>
         </div>
       </div>
+      <div class="lessons-quizzes">
+        <h1 class="lesson-header">Lessons</h1>
+        <ul class="lesson-list">
+          <li class="lesson">Lorem ipsum dolor sit.</li>
+          <li class="lesson">Lorem ipsum dolor sit amet consectetur.</li>
+          <li class="lesson">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </li>
+          <li class="lesson">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, ex.
+          </li>
+          <li class="lesson">Lorem ipsum dolor sit amet consectetur.</li>
+          <li class="lesson">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </li>
+        </ul>
+        <h1 class="quiz-header">Quizzes</h1>
+        <ul class="quiz-list">
+          <li class="quizz">Lorem ipsum dolor sit.</li>
+          <li class="quizz">Lorem ipsum dolor sit amet consectetur.</li>
+          <li class="quizz">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </li>
+          <li class="quizz">Lorem ipsum dolor sit amet consectetur.</li>
+          <li class="quizz">
+            Lorem ipsum dolor sit amet consectetur adipisicing.
+          </li>
+        </ul>
+      </div>
     </div>
   </main>
   <main v-else>
@@ -69,21 +102,87 @@
   </main>
 </template>
 
-<!-- color: #fcecdb;
-background-color: #6a3993;
-font-size: large;
-font-weight: bold;
-width: 100%;
-cursor: pointer;
-text-decoration: none;
-}
-
-.sidebar-nav-button:hover {
-background-color: rgb(252, 236, 219);
-color: #b430af;
-} -->
-
 <style scoped>
+  /* .tag {
+    list-style-type: none;
+    font-size: 20px;
+    color: #b430af;
+    font-weight: bolder;
+    background-color: #fcecdb;
+    padding: 2px 5px 2px 5px;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  li.tag:not(:last-child) {
+    margin-bottom: 15px;
+  } */
+  .quiz-header {
+    color: #fcecdb;
+    margin-bottom: 10px;
+  }
+  .lesson-header {
+    color: #fcecdb;
+    margin-bottom: 10px;
+  }
+  .quiz-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .quizz {
+    font-size: 20px;
+    font-weight: bolder;
+    display: inline-block;
+    background-color: rgb(190, 140, 229);
+    color: #1a0b28;
+    padding: 2px 7px 2px 7px;
+    border-radius: 3px;
+    line-height: 30px;
+    cursor: pointer;
+  }
+  .quizz:hover {
+    background-color: rgb(130, 57, 186);
+  }
+  .lesson-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .lesson {
+    font-size: 20px;
+    font-weight: bolder;
+    display: inline-block;
+    padding: 2px 7px 2px 7px;
+    border-radius: 3px;
+    background-color: #be2e5e;
+    line-height: 30px;
+    color: #fcecdb;
+    cursor: pointer;
+  }
+
+  .lesson:hover {
+    background-color: #9a1944;
+  }
+
+  li.quizz:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  li.lesson {
+    margin-bottom: 15px;
+  }
+
+  .lessons-quizzes {
+    width: 50vw;
+    height: 100vh;
+    justify-content: center;
+    text-align: center;
+    z-index: 2;
+    margin-bottom: 40px;
+    margin-top: -300px;
+    margin-left: 90px;
+  }
   .rating-buttons {
     display: flex;
     gap: 6px;
@@ -104,7 +203,7 @@ color: #b430af;
     background-color: #762eb9;
   }
 
-  .rating-subscription-and-lessons {
+  .rating-subscription {
     display: inline-block;
     padding: 0 70em 0 0;
   }
@@ -151,7 +250,7 @@ color: #b430af;
     color: #fcecdb;
     padding: 0px 15px 0px 15px;
     border-radius: 25px;
-    display: inline-block; /* Add this property */
+    display: inline-block;
   }
   .course-authors {
     background-color: #b430af;
