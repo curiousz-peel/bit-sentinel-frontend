@@ -1,27 +1,31 @@
 <script setup>
   import axios from "axios";
   import { ref, onBeforeMount } from "vue";
-  import { useRouter } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
   import Hero from "../components/hero/Hero.vue";
-  import AuthorCard from "../components/card/AuthorCard.vue";
+  import CourseCard from "../components/card/CourseCard.vue";
 
   const router = useRouter();
+  const route = useRoute();
+
+  console.log(route.params.id);
+
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
 
-  const authors = ref(null);
+  const courses = ref(null);
 
   onBeforeMount(async () => {
     await axios({
       method: "get",
-      url: `http://localhost:8080/api/author/`,
+      url: `http://localhost:8080/api/course/author/${route.params.id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
       },
     })
       .then(function (response) {
-        authors.value = response.data.data;
-        console.log(authors.value);
+        courses.value = response.data.data;
+        console.log(courses.value);
       })
       .catch(function (error) {
         alert(error.response.data);
@@ -33,14 +37,14 @@
   <main v-if="loggedIn">
     <div>
       <Hero></Hero>
-      <div class="author-page">
-        <div class="authors-padding">
-          <h1 class="authors-section">.authors</h1>
-          <div class="authors-container">
-            <AuthorCard
-              v-for="author in authors"
-              :key="author.ID"
-              :author="author"
+      <div class="courses">
+        <div class="all-courses">
+          <h1 class="courses-section-first">.author_courses</h1>
+          <div class="courses-container">
+            <CourseCard
+              v-for="course in courses"
+              :key="course.title"
+              :course="course"
             />
           </div>
         </div>
@@ -53,7 +57,7 @@
 </template>
 
 <style scoped>
-  .author-page {
+  .courses {
     background-color: #341052;
     width: 100vw;
     border: 5px solid;
@@ -63,11 +67,11 @@
     margin-left: 15px;
     padding-bottom: 40px;
   }
-  .authors-padding {
+  .all-courses {
     padding-top: 10px;
     padding-left: 25px;
   }
-  .authors-section {
+  .courses-section-first {
     padding-bottom: 10px;
     padding-left: 20px;
     font-size: 45px;
@@ -75,7 +79,7 @@
     text-shadow: -2px 2px 2px #834db0, 2px 2px 2px #834db0, 2px -2px 2px #834db0,
       -2px -2px 2px #834db0;
   }
-  .authors-container {
+  .courses-container {
     display: grid;
     grid-template-columns: 375px 375px 375px;
     grid-template-rows: minmax(150px, 1fr);
@@ -83,8 +87,9 @@
     row-gap: 20px;
     padding-bottom: 0;
   }
+
   @media screen and (min-width: 800px) {
-    .authors-container {
+    .courses-container {
       grid-template-columns: 375px 375px 375px;
     }
   }

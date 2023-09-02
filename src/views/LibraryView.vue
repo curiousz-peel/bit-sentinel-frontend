@@ -6,6 +6,7 @@
   import CourseCard from "../components/card/CourseCard.vue";
 
   const router = useRouter();
+
   const userName = localStorage.getItem("userName");
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
 
@@ -24,7 +25,6 @@
     })
       .then(function (response) {
         user.value = response.data.data;
-        console.log(user.value);
       })
       .catch(function (error) {
         alert(error.response.data);
@@ -40,7 +40,6 @@
     })
       .then(function (response) {
         subscription.value = response.data.data;
-        console.log(subscription.value);
       })
       .catch(function (error) {
         alert(error);
@@ -56,7 +55,6 @@
     })
       .then(function (response) {
         courses.value = response.data.data;
-        console.log(courses.value);
       })
       .catch(function (error) {
         alert(error);
