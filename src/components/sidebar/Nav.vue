@@ -3,10 +3,15 @@
   import NavLink from "./NavLink.vue";
   import { sidebarStatusStore } from "../../stores/sidebarStatus";
   const { notCollapsed, getWidth, toggleSidebar } = sidebarStatusStore();
+  import { loggedInStore } from "../../stores/loggedInStatus";
+  const { setLoggedInFalse, isLoggedIn } = loggedInStore();
 
   const router = useRouter();
   const logOutUser = () => {
     router.push("/auth");
+    setLoggedInFalse();
+    console.log(isLoggedIn());
+    localStorage.removeItem("bitSentinelToken");
   };
 </script>
 
@@ -150,7 +155,7 @@
     flex-direction: column;
     transition: 0.3s ease;
     border: 5px solid;
-    border-color: #1a0b28;
+    border-color: rgb(26, 11, 40);
   }
 
   .sidebar-nav-button {

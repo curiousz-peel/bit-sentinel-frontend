@@ -1,11 +1,73 @@
 <script setup>
+  import axios from "axios";
+  import { useRouter } from "vue-router";
   import { ref, onMounted } from "vue";
+  import { loggedInStore } from "../stores/loggedInStatus";
+  const { setLoggedInTrue, isLoggedIn } = loggedInStore();
 
   const showAuth = ref(false);
   const isLogin = ref(true);
 
+  const router = useRouter();
+
   const toggleIsLogin = () => {
     isLogin.value = !isLogin.value;
+  };
+
+  const userName = ref("");
+  const userPass = ref("");
+  const email = ref("");
+  const firstName = ref("");
+  const lastName = ref("");
+
+  const loginUser = async () => {
+    await axios({
+      method: "post",
+      url: `http://localhost:8080/api/auth/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        userName: userName.value,
+        password: userPass.value,
+      },
+    })
+      .then(function (response) {
+        localStorage.setItem("bitSentinelToken", response.data.data);
+        setLoggedInTrue();
+        console.log(isLoggedIn());
+        router.push("/");
+      })
+      .catch(function (error) {
+        alert(error.response.data.data);
+      });
+  };
+
+  const signupUser = async () => {
+    console.log("PASS", userPass.value);
+    await axios({
+      method: "post",
+      url: `http://localhost:8080/api/auth/signup`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        userName: userName.value,
+        password: userPass.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+      },
+    })
+      .then(function (response) {
+        localStorage.setItem("bitSentinelToken", response.data.data);
+        setLoggedInTrue();
+        console.log(isLoggedIn());
+        router.push("/");
+      })
+      .catch(function (error) {
+        alert(error.response.data.data);
+      });
   };
 
   onMounted(() => {
@@ -32,26 +94,31 @@
             v-bind:style="isLogin ? { bottom: '270px' } : { bottom: '50px' }"
           ></div>
           <div v-if="isLogin" class="auth-form">
-            <form action="/action_page.php">
-              <label for="uname">user:</label>
-              <input type="text" name="uname" />
-              <label for="pass">password:</label>
-              <input type="password" name="pass" />
+            <form @submit.prevent="loginUser">
+              <label for="userName">user:</label>
+              <input v-model="userName" type="text" name="userName" required />
+              <label for="password">password:</label>
+              <input
+                v-model="userPass"
+                type="password"
+                name="password"
+                required
+              />
               <input type="submit" value="submit" />
             </form>
           </div>
           <div v-else class="auth-form">
-            <form action="/action_page.php">
+            <form @submit.prevent="signupUser">
               <label for="fname">first_name:</label>
-              <input type="text" name="uname" />
+              <input v-model="firstName" type="text" name="uname" required />
               <label for="lname">last_name:</label>
-              <input type="text" name="uname" />
+              <input v-model="lastName" type="text" name="lname" required />
               <label for="mail">mail:</label>
-              <input type="text" name="uname" />
+              <input v-model="email" type="text" name="mail" required />
               <label for="uname">user:</label>
-              <input type="text" name="uname" />
+              <input v-model="userName" type="text" name="uname" required />
               <label for="pass">password:</label>
-              <input type="password" name="pass" />
+              <input v-model="userPass" type="password" name="pass" required />
               <input type="submit" value="submit" />
             </form>
           </div>

@@ -1,5 +1,14 @@
+<script setup>
+  import { defineProps } from "vue";
+
+  const { backgroundImagePath } = defineProps(["backgroundImagePath"]);
+  const backgroundStyle = backgroundImagePath
+    ? { "--background-image": `url(${backgroundImagePath})` }
+    : {};
+</script>
+
 <template>
-  <div class="hero"></div>
+  <div class="hero" :style="backgroundStyle"></div>
 </template>
 
 <style scoped>
@@ -11,11 +20,13 @@
     justify-content: center;
     position: relative;
     flex-direction: column;
-    background-image: url("../jpg/heroBackground1.jpg");
+    /* background-image: url("../jpg/heroBackground1.jpg"); */
     border: 5px solid;
     border-left: 20px solid;
     border-color: #1a0b28;
     background-size: cover;
+    --background-image: url("../jpg/heroBackground1.jpg");
+    background-image: var(--background-image);
   }
   .hero img {
     position: absolute;

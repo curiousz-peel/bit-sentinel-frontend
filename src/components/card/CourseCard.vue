@@ -1,5 +1,6 @@
 <script setup>
   import { defineProps } from "vue";
+  import { useRouter } from "vue-router";
 
   const props = defineProps({
     course: {
@@ -7,10 +8,15 @@
       required: true,
     },
   });
+
+  const router = useRouter();
+  const goToCourse = (id) => {
+    router.push(`/course/${id}`);
+  };
 </script>
 
 <template>
-  <div class="course-card">
+  <div class="course-card" @click="goToCourse(course.id)">
     <img :src="course.image" :alt="course.title" class="course-image" />
     <div class="course-info">
       <h2 class="course-title">{{ course.title }}</h2>

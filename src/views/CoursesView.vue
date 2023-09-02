@@ -14,25 +14,9 @@
   <main v-if="loggedIn">
     <div>
       <Hero></Hero>
-      <div class="home">
-        <div class="home-courses">
-          <h1 class="courses-section-first">.newcomers</h1>
-          <div class="courses-container">
-            <CourseCard
-              v-for="course in courses"
-              :key="course.title"
-              :course="course"
-            />
-          </div>
-          <h1 class="courses-section">.prodigies</h1>
-          <div class="courses-container">
-            <CourseCard
-              v-for="course in courses"
-              :key="course.title"
-              :course="course"
-            />
-          </div>
-          <h1 class="courses-section">.pillars</h1>
+      <div class="courses">
+        <div class="all-courses">
+          <h1 class="courses-section-first">.all_courses</h1>
           <div class="courses-container">
             <CourseCard
               v-for="course in courses"
@@ -53,7 +37,7 @@
 </template>
 
 <style scoped>
-  .home {
+  .courses {
     background-color: #341052;
     width: 100vw;
     border: 5px solid;
@@ -63,7 +47,7 @@
     margin-left: 15px;
     padding-bottom: 40px;
   }
-  .home-courses {
+  .all-courses {
     padding-top: 10px;
     padding-left: 25px;
   }
