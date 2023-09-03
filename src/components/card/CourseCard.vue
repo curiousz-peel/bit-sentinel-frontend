@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="subscription-container">
-        <h3 class="subscription-tier">
+        <h3 class="subscription-tier" v-if="course.subscriptions">
           {{ course.subscriptions.at(0) }}
         </h3>
       </div>
