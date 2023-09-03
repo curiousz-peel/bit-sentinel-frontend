@@ -80,7 +80,6 @@
   .search-bar-container {
     width: 100vw;
     height: 90px;
-    /* background-color: aliceblue; */
     text-align: center;
     padding-bottom: 10px;
     position: relative;

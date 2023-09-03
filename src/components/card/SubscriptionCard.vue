@@ -6,11 +6,12 @@
       type: Object,
       required: true,
     },
+    isLowerTier: Boolean,
   });
 </script>
 
 <template>
-  <div class="subscription-card">
+  <div class="subscription-card" :class="{ 'lower-tier': isLowerTier }">
     <img
       src="../jpg/bronze_coin.png"
       alt="subscription image"
@@ -45,11 +46,9 @@
     background-color: #6a3993;
     cursor: pointer;
   }
-
   .subscription-card:hover {
     box-shadow: 0 0 10px 7px rgb(204, 204, 204, 0.5);
   }
-
   .subscription-image {
     width: 200px;
     height: 200px;
@@ -58,19 +57,16 @@
     object-fit: cover;
     align-self: center;
   }
-
   .subscription-info {
     padding: 5px;
     margin-left: -50px;
   }
-
   .subscription-type {
     font-size: 1.2rem;
     margin-bottom: 1px;
     color: rgb(252, 236, 219);
     display: flex;
   }
-
   .subscription-price {
     display: flex;
     align-items: baseline;
@@ -80,16 +76,13 @@
     padding: 0px 5px 0px 5px;
     border-radius: 12%;
   }
-
   .subscription-duration {
     margin-left: 20px;
   }
-
   .price {
     font-size: 3rem;
     color: #b430af;
   }
-
   .duration {
     display: inline-block;
     color: rgb(252, 236, 219);
@@ -100,5 +93,12 @@
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: bold;
+  }
+  .lower-tier {
+    background-color: #0c0326;
+    opacity: 0.7;
+  }
+  .lower-tier:hover {
+    box-shadow: none;
   }
 </style>
