@@ -25,7 +25,6 @@
     })
       .then(function (response) {
         courses.value = response.data.data;
-        console.log(courses.value);
       })
       .catch(function (error) {
         alert(error.response.data);
@@ -87,7 +86,6 @@
     row-gap: 20px;
     padding-bottom: 0;
   }
-
   @media screen and (min-width: 800px) {
     .courses-container {
       grid-template-columns: 375px 375px 375px;

@@ -27,7 +27,10 @@
         user.value = response.data.data;
       })
       .catch(function (error) {
-        alert(error.response.data);
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
       });
 
     await axios({
@@ -42,7 +45,10 @@
         subscription.value = response.data.data;
       })
       .catch(function (error) {
-        alert(error);
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
       });
 
     await axios({
@@ -57,7 +63,10 @@
         courses.value = response.data.data;
       })
       .catch(function (error) {
-        alert(error);
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
       });
   });
 </script>

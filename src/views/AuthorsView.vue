@@ -24,7 +24,10 @@
         console.log(authors.value);
       })
       .catch(function (error) {
-        alert(error.response.data);
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
       });
   });
 </script>
