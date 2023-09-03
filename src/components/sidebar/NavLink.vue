@@ -3,6 +3,7 @@
   import { useRoute, RouterLink } from "vue-router";
   import { sidebarStatusStore } from "../../stores/sidebarStatus";
   const { notCollapsed } = sidebarStatusStore();
+  import { ref } from "vue";
 
   const route = useRoute();
   const { toPath, iconPath } = defineProps(["toPath", "iconPath"]);
@@ -39,12 +40,10 @@
   .fade-leave-active {
     transition: opacity 0.1s;
   }
-
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
   }
-
   .link {
     display: flex;
     align-items: center;
@@ -63,7 +62,6 @@
     color: white;
     text-decoration: none;
   }
-
   .text {
     font-weight: 600;
     padding-left: 20px;
@@ -71,18 +69,27 @@
     justify-content: center;
     align-content: center;
   }
-
   .link:hover {
     background-color: #b430af;
   }
-
   .link.active {
     background-color: #341052;
   }
-
   .link .side-bar-icon {
     flex-shrink: 0;
     width: 30px;
     margin-right: 10px;
+  }
+  .link.disabled {
+    pointer-events: none;
+    opacity: 0;
+    background-color: rgb(196, 196, 196);
+    cursor: not-allowed;
+  }
+  .link.unavailable {
+    background-color: rgb(196, 196, 196);
+    opacity: 0.9;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 </style>

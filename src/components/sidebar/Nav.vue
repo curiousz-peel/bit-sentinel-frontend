@@ -1,18 +1,37 @@
 <script setup>
   import { useRouter } from "vue-router";
+  import { computed, onBeforeUpdate } from "vue";
   import NavLink from "./NavLink.vue";
   import { sidebarStatusStore } from "../../stores/sidebarStatus";
   const { notCollapsed, getWidth, toggleSidebar } = sidebarStatusStore();
-  import { loggedInStore } from "../../stores/loggedInStatus";
-  const { setLoggedInFalse, isLoggedIn } = loggedInStore();
+  import { useLoggedInStore } from "../../stores/loggedInStatus";
+  const { setLoggedInFalse, isLoggedIn } = useLoggedInStore();
 
   const router = useRouter();
   const logOutUser = () => {
     router.push("/auth");
     setLoggedInFalse();
-    console.log(isLoggedIn());
     localStorage.removeItem("bitSentinelToken");
+    localStorage.removeItem("id");
+    localStorage.removeItem("isAuthor");
+    localStorage.removeItem("isModerator");
+    localStorage.removeItem("userName");
   };
+
+  let isAuthor = localStorage.getItem("isAuthor") === "true";
+  let isModerator = localStorage.getItem("isModerator") === "true";
+
+  onBeforeUpdate(() => {
+    isAuthor = localStorage.getItem("isAuthor") === "true";
+    isModerator = localStorage.getItem("isModerator") === "true";
+  });
+
+  let isContributor = computed(() => {
+    return isAuthor || isModerator;
+  });
+  console.log(isAuthor);
+  console.log(isModerator);
+  console.log("contributor", isContributor.value);
 </script>
 
 <template>
@@ -46,10 +65,16 @@
       <NavLink to-path="/subscription" icon-path="fa-solid fa-wallet"
         >Subscription</NavLink
       >
-      <NavLink to-path="/purchases" icon-path="fa-solid fa-cart-shopping"
+      <NavLink
+        to-path="/purchases"
+        icon-path="fa-solid fa-cart-shopping"
+        class="unavailable"
         >Purchases</NavLink
       >
-      <NavLink to-path="/playground" icon-path="fa-solid fa-screwdriver-wrench"
+      <NavLink
+        to-path="/playground"
+        icon-path="fa-solid fa-screwdriver-wrench"
+        :class="{ disabled: !isContributor }"
         >Playground</NavLink
       >
     </div>

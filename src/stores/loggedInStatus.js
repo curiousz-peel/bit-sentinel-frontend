@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
 
-export const loggedInStore = defineStore("loggedInStore", {
+export const useLoggedInStore = defineStore("loggedInStore", {
   state: () => {
     return {
       loggedIn: false,
     };
+  },
+  getters: {
+    isLoggedInStatus: (state) => state.loggedIn,
   },
   actions: {
     setLoggedInTrue() {

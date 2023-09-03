@@ -12,6 +12,10 @@
   const bestRatedCourses = ref(null);
   const fundamentalCourses = ref(null);
 
+  const userName = localStorage.getItem("userName");
+  const user = ref(null);
+  const loadedUser = ref(false);
+
   onMounted(async () => {
     axios.defaults.headers.common[
       "Authorization"
@@ -30,6 +34,28 @@
           fundamentalCourses.value = fundamental.data.data;
         })
       );
+
+    await axios({
+      method: "get",
+      url: `http://localhost:8080/api/user/name/${userName}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+      },
+    })
+      .then(function (response) {
+        user.value = response.data.data;
+        localStorage.setItem("isAuthor", response.data.data.isAuthor);
+        localStorage.setItem("isModerator", response.data.data.isModerator);
+        localStorage.setItem("id", response.data.data.id);
+        loadedUser.value = true;
+      })
+      .catch(function (error) {
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
+      });
   });
 </script>
 

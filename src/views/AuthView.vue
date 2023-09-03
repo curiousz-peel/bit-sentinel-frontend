@@ -2,8 +2,8 @@
   import axios from "axios";
   import { useRouter } from "vue-router";
   import { ref, onMounted } from "vue";
-  import { loggedInStore } from "../stores/loggedInStatus";
-  const { setLoggedInTrue, isLoggedIn } = loggedInStore();
+  import { useLoggedInStore } from "../stores/loggedInStatus";
+  const loggedInStore = useLoggedInStore();
 
   const showAuth = ref(false);
   const isLogin = ref(true);
@@ -35,7 +35,7 @@
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
         localStorage.setItem("userName", userName.value);
-        setLoggedInTrue();
+        loggedInStore.setLoggedInTrue(useLoggedInStore);
         router.push("/");
       })
       .catch(function (error) {
@@ -61,7 +61,7 @@
     })
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
-        setLoggedInTrue();
+        loggedInStore.setLoggedInTrue();
         console.log(isLoggedIn());
         router.push("/");
       })
