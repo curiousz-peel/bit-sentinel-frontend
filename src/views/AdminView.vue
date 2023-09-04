@@ -8,69 +8,59 @@
   const router = useRouter();
   const route = useRoute();
 
-  // const isModerator = localStorage.getItem("isModerator");
-  const isLoggedIn = localStorage.getItem("bitSentinelToken");
-  // const isAuthor = localStorage.getItem("isAuthor");
-  const id = localStorage.getItem("id");
+  const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
 
-  let isAuthor = localStorage.getItem("isAuthor").toLowerCase() === "true";
-  let isModerator =
-    localStorage.getItem("isModerator").toLowerCase() === "true";
+  const goToAuthors = () => {
+    router.push("/playground/authors");
+  };
 
-  const isContributor = isAuthor || isModerator;
-  console.log("DA", isAuthor);
-  console.log("ALO", !isAuthor);
+  const goToCourses = () => {
+    router.push("/playground/courses");
+  };
 
-  console.log(id);
+  const goToQuizzes = () => {
+    router.push("/playground/quizzes");
+  };
 
-  const courses = ref(null);
+  const goToSubscriptions = () => {
+    router.push("/playground/subscriptions");
+  };
 
-  //   onBeforeMount(async () => {
-  //     await axios({
-  //       method: "get",
-  //       url: `http://localhost:8080/api/course/author/${route.params.id}`,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
-  //       },
-  //     })
-  //       .then(function (response) {
-  //         courses.value = response.data.data;
-  //       })
-  //       .catch(function (error) {
-  //         alert(error.response.data.data);
-  //         if (error.response.data.data === "Token is expired") {
-  //           router.push("/auth");
-  //         }
-  //       });
-  //   });
+  const goToRatings = () => {
+    router.push("/playground/ratings");
+  };
+
+  const goToMedia = () => {
+    router.push("/playground/media");
+  };
+
+  const goToEnrollments = () => {
+    router.push("/playground/enrollments");
+  };
 </script>
 
 <template>
-  <main v-if="isContributor">
+  <main v-if="loggedIn">
     <div>
       <Hero></Hero>
       <div class="courses">
         <div class="all-courses">
           <h1 class="courses-section-first">.admin_view</h1>
-          <div class="courses-container">
-            <!-- <CourseCard
-              v-for="course in courses"
-              :key="course.title"
-              :course="course"
-            /> -->
+          <div class="commands-container">
+            <button @click="goToAuthors">AUTHORS/USERS</button>
+            <button @click="goToCourses">COURSES/LESSONS/COMMENTS</button>
+            <button @click="goToQuizzes">QUIZZES/QUESTIONS/OPTIONS</button>
+            <button @click="goToSubscriptions">SUBSCRIPTIONS/PLANS</button>
+            <button @click="goToRatings">RATINGS/PROGRESS</button>
+            <button @click="goToMedia">MEDIA/TYPES</button>
+            <button @click="goToEnrollments">ENROLLMENTS</button>
           </div>
         </div>
       </div>
     </div>
   </main>
   <main v-else>
-    <div v-if="isLoggedIn">
-      {{ router.push("/") }}
-    </div>
-    <div v-else>
-      {{ router.push("/auth") }}
-    </div>
+    {{ router.push("/") }}
   </main>
 </template>
 
@@ -97,17 +87,32 @@
     text-shadow: -2px 2px 2px #834db0, 2px 2px 2px #834db0, 2px -2px 2px #834db0,
       -2px -2px 2px #834db0;
   }
-  .courses-container {
+  .commands-container {
+    margin-left: 30px;
     display: grid;
-    grid-template-columns: 375px 375px 375px;
-    grid-template-rows: minmax(150px, 1fr);
-    column-gap: 15px;
-    row-gap: 20px;
+    grid-template-columns: 250px 250px 250px 250px;
+    grid-template-rows: 250px 250px;
+    column-gap: 30px;
+    row-gap: 30px;
     padding-bottom: 0;
   }
-  @media screen and (min-width: 800px) {
-    .courses-container {
-      grid-template-columns: 375px 375px 375px;
-    }
+
+  button {
+    font-size: 15px;
+    font-weight: bolder;
+    text-align: center;
+    color: rgb(252, 236, 219);
+    background-color: #6c4292;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  button:hover {
+    box-shadow: 3px 3px 5px #b497ce;
+    border: solid #b497ce;
+    border-radius: 10px;
+  }
+  button:active {
+    background-color: #9b5dd4;
   }
 </style>

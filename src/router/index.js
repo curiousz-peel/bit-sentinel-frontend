@@ -16,6 +16,41 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
+      path: "/playground/authors",
+      name: "adminAuthors",
+      component: () => import("../views/AdminViewAuthors.vue"),
+    },
+    // {
+    //   path: "/playground/courses",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewCourses.vue"),
+    // },
+    // {
+    //   path: "/playground/quizzes",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewQuizzes.vue"),
+    // },
+    // {
+    //   path: "/playground/subscriptions",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewSubscriptions.vue"),
+    // },
+    // {
+    //   path: "/playground/ratings",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewRatings.vue"),
+    // },
+    // {
+    //   path: "/playground/media",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewMedia.vue"),
+    // },
+    // {
+    //   path: "/playground/enrollments",
+    //   name: "admin",
+    //   component: () => import("../views/AdminViewEnrollments.vue"),
+    // },
+    {
       path: "/playground",
       name: "admin",
       component: () => import("../views/AdminView.vue"),

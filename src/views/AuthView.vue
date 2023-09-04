@@ -3,6 +3,9 @@
   import { useRouter } from "vue-router";
   import { ref, onMounted } from "vue";
   import { useLoggedInStore } from "../stores/loggedInStatus";
+  import { useCurrentUserInfoStore } from "../stores/currentUserInfo";
+  const userInfoStore = useCurrentUserInfoStore();
+
   const loggedInStore = useLoggedInStore();
 
   const showAuth = ref(false);
@@ -34,6 +37,7 @@
     })
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
+        userInfoStore.userName = userName.value;
         localStorage.setItem("userName", userName.value);
         loggedInStore.setLoggedInTrue(useLoggedInStore);
         router.push("/");
