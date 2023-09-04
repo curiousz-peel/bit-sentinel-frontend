@@ -53,6 +53,7 @@
               <TransitionGroup name="guests">
                 <li v-for="user in users" :key="user.id">
                   <AdminUserCard
+                    class="user-card"
                     @removeUser="removeUser"
                     :user="user"
                   ></AdminUserCard>
@@ -149,11 +150,10 @@
     margin-top: 10px;
     background-color: #834db0;
     color: whitesmoke;
-    /* box-shadow: 1px 1px 20px rgba(255, 255, 255, 0.3); */
     text-align: center;
     cursor: pointer;
+    margin-bottom: 30px;
   }
-  /* TRANSITION GROUP */
   .guests-enter-from {
     opacity: 0;
     transform: scale(0.5);

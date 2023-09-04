@@ -38,6 +38,7 @@
 
   button {
     width: fit-content;
+    margin-left: -110px;
     width: 200px;
     height: 40px;
     font-size: 20px;

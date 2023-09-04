@@ -27,6 +27,7 @@
   };
 
   const updateUser = async (user) => {
+    console.log("VALORI", user.isModerator, user.isAuthor);
     await axios({
       method: "put",
       url: `http://localhost:8080/api/user/${user.id}`,
@@ -86,8 +87,8 @@
         <input type="checkbox" :id="id" v-model="user.isModerator" />
       </div>
       <div class="form-group">
-        <label for="isAdmin">Is Admin:</label>
-        <input type="checkbox" :id="id" v-model="user.isAdmin" />
+        <label for="isAuthor">Is Author:</label>
+        <input type="checkbox" :id="id" v-model="user.isAuthor" />
       </div>
     </form>
     <div class="button-container">
