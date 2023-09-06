@@ -164,10 +164,15 @@
         if (error.response.data.data === "Token is expired") {
           router.push("/auth");
         }
+        router.push("/");
       });
   });
 
   const hasAccess = () => {
+    console.log(
+      "hasAcces",
+      course.value.subscriptions.includes(subscription.value.subscriptionType)
+    );
     return course.value.subscriptions.includes(
       subscription.value.subscriptionType
     );
@@ -212,7 +217,7 @@
             <h2 class="rating">{{ course.rating }}</h2>
             <h2 class="out-of-rating">/5</h2>
           </div>
-          <div v-if="hasAccess" class="rating-buttons">
+          <div v-if="hasAccess()" class="rating-buttons">
             <button @click="rateCourse(1)" class="rating-button">1</button>
             <button @click="rateCourse(2)" class="rating-button">2</button>
             <button @click="rateCourse(3)" class="rating-button">3</button>
@@ -227,20 +232,22 @@
           </div>
         </div>
         <div class="lessons-quizzes">
-          <h1 class="lesson-header">Lessons</h1>
+          <h1 v-if="hasAccess()" class="lesson-header">Lessons</h1>
           <ul class="lesson-list">
             <li
               class="lesson"
+              v-if="hasAccess()"
               v-for="lesson in lessons"
               @click="goToLesson(lesson)"
             >
               {{ lesson.title }}
             </li>
           </ul>
-          <h1 class="quiz-header">Quizzes</h1>
+          <h1 v-if="hasAccess()" class="quiz-header">Quizzes</h1>
           <ul class="quiz-list">
             <li
               class="quizz"
+              v-if="hasAccess()"
               v-for="quiz in quizzes"
               @click="goToQuiz(quiz.id)"
             >
@@ -319,7 +326,7 @@
     text-align: center;
     z-index: 2;
     margin-bottom: 40px;
-    margin-top: -370px;
+    margin-top: -270px;
     margin-left: 90px;
   }
   .rating-buttons {

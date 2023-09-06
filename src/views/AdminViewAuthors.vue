@@ -4,12 +4,12 @@
   import { useRouter } from "vue-router";
   import Hero from "../components/hero/Hero.vue";
   import backButton from "../components/button/backButton.vue";
-  import AdminUserCard from "../components/card/AdminUserCard.vue";
+  import AdminAuthorCard from "../components/card/AdminAuthorCard.vue";
 
   const router = useRouter();
 
-  const users = ref([]);
-  const loadedUsers = ref(false);
+  const authors = ref([]);
+  const loadedAuthors = ref(false);
 
   const loggedIn = ref(localStorage.getItem("bitSentinelToken"));
 
@@ -20,12 +20,12 @@
 
     await axios({
       method: "get",
-      url: `http://localhost:8080/api/user`,
+      url: `http://localhost:8080/api/author`,
     })
       .then(function (response) {
-        users.value = response.data.data;
+        authors.value = response.data.data;
         console.log(response);
-        loadedUsers.value = true;
+        loadedAuthors.value = true;
       })
       .catch(function (error) {
         alert(error.response.data.data);
@@ -34,10 +34,8 @@
         }
       });
   });
-
-  const removeUser = (id) => {
-    console.log("succeeded");
-    users.value = users.value.filter((n) => n.id != id);
+  const removeAuthor = (id) => {
+    authors.value = authors.value.filter((n) => n.ID != id);
   };
 </script>
 
@@ -45,18 +43,17 @@
   <main v-if="loggedIn">
     <div class="background">
       <Hero></Hero>
-      <div v-if="loadedUsers" class="courses">
+      <div v-if="loadedAuthors" class="author-cards">
         <div class="margins">
-          <h1 class="courses-section-first">.admin_view_authors</h1>
+          <h1 class="author-cards-section-first">.admin_view_authors</h1>
           <div class="container">
-            <ul v-if="loadedUsers">
-              <TransitionGroup name="guests">
-                <li v-for="user in users" :key="user.id">
-                  <AdminUserCard
-                    class="user-card"
-                    @removeUser="removeUser"
-                    :user="user"
-                  ></AdminUserCard>
+            <ul v-if="loadedAuthors">
+              <TransitionGroup name="authors">
+                <li v-for="author in authors" :key="author.id">
+                  <AdminAuthorCard
+                    @removeAuthor="removeAuthor"
+                    :author="author"
+                  ></AdminAuthorCard>
                 </li>
               </TransitionGroup>
             </ul>
@@ -81,7 +78,7 @@
     width: 100%;
     height: 100%;
   }
-  .courses {
+  .author-cards {
     background-color: #341052;
     background-size: auto;
     height: 100%;
@@ -92,7 +89,7 @@
     margin-left: 15px;
     padding-bottom: 40px;
   }
-  .courses-section-first {
+  .author-cards-section-first {
     padding-bottom: 10px;
     padding-left: 20px;
     font-size: 45px;
@@ -152,32 +149,31 @@
     color: whitesmoke;
     text-align: center;
     cursor: pointer;
-    margin-bottom: 30px;
   }
-  .guests-enter-from {
+  .authors-enter-from {
     opacity: 0;
     transform: scale(0.5);
   }
-  .guests-enter-to {
+  .authors-enter-to {
     opacity: 1;
     transform: scale(1);
   }
-  .guests-enter-active {
+  .authors-enter-active {
     transition: all 0.5s ease;
   }
-  .guests-leave-from {
+  .authors-leave-from {
     opacity: 1;
     transform: scale(1);
   }
-  .guests-leave-to {
+  .authors-leave-to {
     opacity: 0;
     transform: scale(0.5);
   }
-  .guests-leave-active {
+  .authors-leave-active {
     transition: all 0.5s ease;
     position: absolute;
   }
-  .guests-move {
+  .authors-move {
     transition: all 0.5s ease;
   }
 </style>

@@ -16,40 +16,80 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
+      path: "/playground/users",
+      name: "adminUsers",
+      component: () => import("../views/AdminViewUsers.vue"),
+    },
+    {
       path: "/playground/authors",
       name: "adminAuthors",
       component: () => import("../views/AdminViewAuthors.vue"),
     },
-    // {
-    //   path: "/playground/courses",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewCourses.vue"),
-    // },
-    // {
-    //   path: "/playground/quizzes",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewQuizzes.vue"),
-    // },
-    // {
-    //   path: "/playground/subscriptions",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewSubscriptions.vue"),
-    // },
-    // {
-    //   path: "/playground/ratings",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewRatings.vue"),
-    // },
-    // {
-    //   path: "/playground/media",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewMedia.vue"),
-    // },
-    // {
-    //   path: "/playground/enrollments",
-    //   name: "admin",
-    //   component: () => import("../views/AdminViewEnrollments.vue"),
-    // },
+    {
+      path: "/playground/courses",
+      name: "adminCourses",
+      component: () => import("../views/AdminViewCourses.vue"),
+    },
+    {
+      path: "/playground/lessons",
+      name: "adminLessons",
+      component: () => import("../views/AdminViewLessons.vue"),
+    },
+    {
+      path: "/playground/comments",
+      name: "adminComments",
+      component: () => import("../views/AdminViewComments.vue"),
+    },
+    {
+      path: "/playground/quizzes",
+      name: "adminQuizzes",
+      component: () => import("../views/AdminViewQuizzes.vue"),
+    },
+    {
+      path: "/playground/questions",
+      name: "adminQuestions",
+      component: () => import("../views/AdminViewQuestions.vue"),
+    },
+    {
+      path: "/playground/options",
+      name: "adminOptions",
+      component: () => import("../views/AdminViewOptions.vue"),
+    },
+    {
+      path: "/playground/subscriptions",
+      name: "adminSubscriptions",
+      component: () => import("../views/AdminViewSubscriptions.vue"),
+    },
+    {
+      path: "/playground/plans",
+      name: "adminPlans",
+      component: () => import("../views/AdminViewPlans.vue"),
+    },
+    {
+      path: "/playground/ratings",
+      name: "adminRatings",
+      component: () => import("../views/AdminViewRatings.vue"),
+    },
+    {
+      path: "/playground/progresses",
+      name: "adminProgresses",
+      component: () => import("../views/AdminViewProgresses.vue"),
+    },
+    {
+      path: "/playground/medias",
+      name: "adminMedias",
+      component: () => import("../views/AdminViewMedias.vue"),
+    },
+    {
+      path: "/playground/types",
+      name: "adminTypes",
+      component: () => import("../views/AdminViewTypes.vue"),
+    },
+    {
+      path: "/playground/enrollments",
+      name: "adminEnroll",
+      component: () => import("../views/AdminViewEnrollments.vue"),
+    },
     {
       path: "/playground",
       name: "admin",

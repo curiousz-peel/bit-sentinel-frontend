@@ -65,8 +65,8 @@
     })
       .then(function (response) {
         localStorage.setItem("bitSentinelToken", response.data.data);
+        localStorage.setItem("userName", userName.value);
         loggedInStore.setLoggedInTrue();
-        console.log(isLoggedIn());
         router.push("/");
       })
       .catch(function (error) {
