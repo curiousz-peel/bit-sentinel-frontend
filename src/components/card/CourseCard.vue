@@ -40,7 +40,7 @@
 <template>
   <div class="course-card" @click="goToCourse(props.course.id)">
     <img
-      src="https://images.unsplash.com/photo-1693032521214-fb25014ac9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3432&q=80"
+      src="../jpg/course-brain.png"
       :alt="course.title"
       class="course-image"
     />
@@ -50,7 +50,9 @@
         <span v-for="tag in course.tags" :key="tag" class="tag">{{ tag }}</span>
       </div>
       <div class="course-rating">
-        <div class="rating-score">{{ parseInt(props.course.rating) }} / 5</div>
+        <div class="rating-score">
+          {{ parseFloat(props.course.rating) }} / 5
+        </div>
         <div class="rating-count">
           {{ courseRatings ? courseRatings.length : 0 }}
           {{

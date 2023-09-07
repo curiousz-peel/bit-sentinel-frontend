@@ -13,6 +13,7 @@
 
   const course = ref(null);
   const user = ref(null);
+  const currentRating = ref(0);
   const subscription = ref(null);
   const lessons = ref([]);
   const quizzes = ref([]);
@@ -25,6 +26,7 @@
   const loadedSubscription = ref(false);
   const loadedLessons = ref(false);
   const loadQuizzes = ref(false);
+  const loadedRating = ref(false);
 
   const goToTag = (tagValue) => {
     router.push(`/course/tag/${tagValue}`);
@@ -39,7 +41,29 @@
   };
 
   const rateCourse = (rating) => {
-    console.log("RATE COURSE", rating);
+    axios({
+      method: "post",
+      url: `http://localhost:8080/api/rating/rate/`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+      },
+      data: {
+        userId: user.value.id,
+        courseId: course.value.id,
+        ratingValue: rating,
+      },
+    })
+      .then(function (response) {
+        console.log("yay");
+      })
+      .catch(function (error) {
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
+      });
+    window.location.reload();
   };
 
   onBeforeMount(async () => {
@@ -166,6 +190,30 @@
         }
         router.push("/");
       });
+
+    axios({
+      method: "post",
+      url: `http://localhost:8080/api/rating/byUserCourse`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("bitSentinelToken")}`,
+      },
+      data: {
+        userId: user.value.id,
+        courseId: course.value.id,
+      },
+    })
+      .then(function (response) {
+        if (response.data != null) {
+          currentRating.value = response.data.data;
+        }
+      })
+      .catch(function (error) {
+        alert(error.response.data.data);
+        if (error.response.data.data === "Token is expired") {
+          router.push("/auth");
+        }
+      });
   });
 
   const hasAccess = () => {
@@ -218,11 +266,17 @@
             <h2 class="out-of-rating">/5</h2>
           </div>
           <div v-if="hasAccess()" class="rating-buttons">
-            <button @click="rateCourse(1)" class="rating-button">1</button>
-            <button @click="rateCourse(2)" class="rating-button">2</button>
-            <button @click="rateCourse(3)" class="rating-button">3</button>
-            <button @click="rateCourse(4)" class="rating-button">4</button>
-            <button @click="rateCourse(5)" class="rating-button">5</button>
+            <button
+              v-for="index in 5"
+              :key="index"
+              class="rating-button"
+              :class="{
+                current: currentRating.rating == index,
+              }"
+              @click="rateCourse(index)"
+            >
+              {{ index }}
+            </button>
           </div>
           <div class="subscription">
             <h2 class="tags-rating-header">.tier:</h2>
@@ -343,6 +397,10 @@
     color: #fff;
     border: none;
     font-weight: bold;
+    cursor: pointer;
+  }
+  .rating-button.current {
+    background-color: #c4b4d4;
   }
   .rating-button:hover {
     background-color: #762eb9;
